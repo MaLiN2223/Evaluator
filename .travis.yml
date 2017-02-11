@@ -1,7 +1,8 @@
 language: csharp
-solution: "./Evaluator/Evaluator.sln" 
+solution: Evaluator.sln
 install:
-	- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Evaluator/Evaluator.sln
+	- nuget restore Evaluator.sln
+	- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-	- xbuild ./Evaluator/Evaluator.sln
+	- xbuild /p:Configuration=Release Evaluator.sln
 	- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe Tests/bin/Release/Tests.dll 
