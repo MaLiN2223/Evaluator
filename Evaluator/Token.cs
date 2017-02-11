@@ -7,7 +7,7 @@
     public class Token
     {
         public TokenType Type { get; }
-        public string Value { get; set; }
+        public string Value { get; }
 
         public Token(char value, TokenType type) : this(value.ToString(), type)
         {

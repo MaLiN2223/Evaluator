@@ -8,19 +8,18 @@ namespace Evaluator
 {
     public static class ExpressionTreeCreator
     {
-        enum MinusState
+        private enum MinusState
         {
-            Normal, Negation, Scientific, None
+            Normal, Negation, Scientific
         }
 
         public static List<Token> ToPostfix(List<Token> tokens)
         {
-            Queue<Token> output = new Queue<Token>();
-            Stack<Token> stack = new Stack<Token>();
+            var output = new Queue<Token>();
+            var stack = new Stack<Token>();
             bool unaryMinus = false;
-            for (int index = 0; index < tokens.Count; index++)
+            foreach (var token in tokens)
             {
-                var token = tokens[index];
                 if (token.Type == TokenType.Number)
                 {
                     if (unaryMinus)
@@ -187,7 +186,8 @@ namespace Evaluator
                         var token = new Token("~", TokenType.Operator);
                         list.Add(token);
                     }
-                    else if (((c == '-') || c == '+') && lastNumber.Length > 0 && lastNumber[lastNumber.Length - 1] == 'e')
+                    else if (((c == '-') || c == '+') &&
+                        lastNumber.Length > 0 && lastNumber[lastNumber.Length - 1] == 'e')
                     {
                         lastNumber += c;
                     }

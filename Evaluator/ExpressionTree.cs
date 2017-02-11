@@ -52,8 +52,6 @@ namespace Evaluator
         {
             if (Right != null && Left != null)
                 return evaluateFunc(Left.Evaluate(), Right.Evaluate());
-            if (Right != null)
-                return evaluateFunc(Right.Evaluate(), 0);
             if (Left != null)
                 return evaluateFunc(Left.Evaluate(), 0);
             return evaluateFunc(0, 0);

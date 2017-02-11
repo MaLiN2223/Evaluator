@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Associativity.cs" />
     <Compile Include="EvaluationData.cs" />
+    <Compile Include="EvaluationException.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="ExpressionTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,40 +2,42 @@
 namespace Evaluator
 {
     using System;
-    using System.Diagnostics;
+    using System.Data;
     using System.Linq;
 
-    public class Evaluate
+    public static class Evaluate
     {
-
-        public string eval(string expression)
+        public static double EvaluateExpression(string expression)
         {
             if (!IsValid(expression))
             {
-                return "ERROR";
+                throw new EvaluationException("Expression is not valid");
             }
             try
             {
                 var tree = ExpressionTreeCreator.BuildTree(expression);
                 var data = tree.Evaluate();
-                if (data < double.PositiveInfinity && data > double.NegativeInfinity)
-                    return data.ToString();
-                return "ERROR";
+                return data;
             }
-            catch (Exception)
+            catch (InvalidOperationException exc)
             {
-
-                return "ERROR";
+                if (exc.Message.Contains("Stack empty"))
+                {
+                    throw new EvaluationException("Expression is not valid");
+                }
+                throw;
             }
+
         }
 
-        private bool IsValid(string expression)
+        private static bool IsValid(string expression)
         {
-            if (expression.Contains("++")
-                || expression.Contains("(+") || expression.Contains("+)")
-                || expression.Contains("-)"))
-                return false;
             if (expression.Count(x => x == ')') != expression.Count(x => x == '('))
+                return false;
+            if (expression.Contains("++")
+                || expression.Contains("(+")
+                || expression.Contains("+)")
+                || expression.Contains("-)"))
                 return false;
             return true;
         }
