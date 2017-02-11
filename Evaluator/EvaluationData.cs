@@ -44,7 +44,8 @@ namespace Evaluator
                 {"tanh",  Math.Tanh},
                 {"tan", Math.Tan},
                 {"sin", Math.Sin},
-                {"cos", Math.Cos}
+                {"cos", Math.Cos},
+                {"neg", d=>-d},
 
             };
 

@@ -64,7 +64,7 @@ namespace Tests
             Assert.AreEqual(output, tokens.Aggregate("", (x, y) => x + "|" + y.Value).Substring(1));
 
             str = "-(5 * 1)";
-            output = "~|5|*|1";
+            output = "neg|(|5|*|1|)";
             tokens = ExpressionTreeCreator.Tokenize(str);
             Assert.AreEqual(output, tokens.Aggregate("", (x, y) => x + "|" + y.Value).Substring(1));
         }

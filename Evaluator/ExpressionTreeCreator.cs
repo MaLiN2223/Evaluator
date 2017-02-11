@@ -10,28 +10,8 @@ namespace Evaluator
     {
         enum MinusState
         {
-            Normal, Negation, Scientific
+            Normal, Negation, Scientific, None
         }
-
-        //public static List<Token> PreParse(List<Token> tokens)
-        //{
-        //    for (int i = 0; i < tokens.Count; i++)
-        //    {
-        //        var token = tokens[i];
-        //        if (token.Value == "~" && i + 1 < tokens.Count && tokens[i + 1].Value == "(")
-        //        {
-        //            int bracketCount = 1;
-        //            int q = i + 2;
-        //            while (q < tokens.Count && bracketCount > 0)
-        //            {
-        //                if (tokens[q].Type == TokenType.Number)
-        //                {
-        //                    tokens[q].Value = (-(double.Parse(tokens[q].Value))).ToString();
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
         public static List<Token> ToPostfix(List<Token> tokens)
         {
             Queue<Token> output = new Queue<Token>();
@@ -180,6 +160,12 @@ namespace Evaluator
                     }
                     dumpFunction(lastCharacter);
                     lastCharacter = "";
+                    if (list.Count > 0 && list.Last().Value == "~")
+                    {
+                        list.RemoveAt(list.Count - 1);
+                        var func = new Token("neg", TokenType.Function);
+                        list.Add(func);
+                    }
                     minusState = MinusState.Negation;
                     var token = new Token("(", TokenType.Operator);
                     list.Add(token);
