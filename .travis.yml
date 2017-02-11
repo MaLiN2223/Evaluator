@@ -6,5 +6,4 @@ install:
 	- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Evaluator/Evaluator.sln
 script:
 	- xbuild ./Evaluator/Evaluator.sln
-after-script:
-	- nunit-console Tests/bin/Release/Tests.dll
+	- mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe Tests/bin/Release/Tests.dll 
