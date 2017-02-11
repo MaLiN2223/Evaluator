@@ -12,18 +12,19 @@ namespace Evaluator
         {
             Normal, Negation, Scientific, None
         }
+
         public static List<Token> ToPostfix(List<Token> tokens)
         {
             Queue<Token> output = new Queue<Token>();
             Stack<Token> stack = new Stack<Token>();
             bool unaryMinus = false;
-            foreach (var token in tokens)
+            for (int index = 0; index < tokens.Count; index++)
             {
+                var token = tokens[index];
                 if (token.Type == TokenType.Number)
                 {
                     if (unaryMinus)
                     {
-                        token.Value = (-(double.Parse(token.Value))).ToString();
                         unaryMinus = false;
                     }
                     output.Enqueue(token);
@@ -31,6 +32,7 @@ namespace Evaluator
                 else if (token.Value == "~")
                 {
                     unaryMinus = !unaryMinus;
+                    stack.Push(token);
                 }
                 else if (token.Type == TokenType.Function)
                 {
@@ -109,7 +111,6 @@ namespace Evaluator
 
         public static List<Token> Tokenize(string input)
         {
-            input = input.Replace(" ", "");
             var list = new List<Token>();
             Action<string> dumpNumber =
                 c =>
@@ -128,7 +129,14 @@ namespace Evaluator
             var minusState = MinusState.Negation;
             foreach (char c in input)
             {
-                if (char.IsLetter(c))
+                if (c == ' ')
+                {
+                    dumpFunction(lastCharacter);
+                    lastCharacter = "";
+                    dumpNumber(lastNumber);
+                    lastNumber = "";
+                }
+                else if (char.IsLetter(c))
                 {
                     if (c == 'e' && lastNumber != "")
                     {
@@ -179,9 +187,9 @@ namespace Evaluator
                         var token = new Token("~", TokenType.Operator);
                         list.Add(token);
                     }
-                    else if (c == '-' && (minusState == MinusState.Scientific))
+                    else if (((c == '-') || c == '+') && lastNumber.Length > 0 && lastNumber[lastNumber.Length - 1] == 'e')
                     {
-                        lastNumber += "-";
+                        lastNumber += c;
                     }
                     else
                     {

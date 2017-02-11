@@ -36,6 +36,7 @@ namespace Evaluator
                 {"exp",Math.Exp},
                 {"sqrt", Math.Sqrt},
                 {"abs",  Math.Abs},
+                {"Abs",  Math.Abs},
                 {"atan", Math.Atan},
                 {"acos",  Math.Acos} ,
                 {"asin", Math.Asin},
@@ -51,12 +52,12 @@ namespace Evaluator
 
         public static readonly Dictionary<string, OperatorData> OperatorData = new Dictionary<string, OperatorData>
         {
-            { "~", new OperatorData(0,Associativity.Left)},
+            { "~", new OperatorData(3,Associativity.Right)},
             { "+", new OperatorData(1,Associativity.Left)},
             { "-", new OperatorData(1,Associativity.Left)},
             { "*", new OperatorData(2,Associativity.Left)},
             { "/", new OperatorData(2,Associativity.Left)},
-            { "&", new OperatorData(3,Associativity.Right)},
+            { "&", new OperatorData(4,Associativity.Right)},
             { ")", new OperatorData(1,Associativity.Left)},
             { "(", new OperatorData(0,Associativity.Right)},
         };

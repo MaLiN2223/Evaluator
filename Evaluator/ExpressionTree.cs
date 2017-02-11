@@ -3,6 +3,7 @@
 namespace Evaluator
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     public class ExpressionTreeNode
@@ -28,7 +29,7 @@ namespace Evaluator
             }
             else if (token.Type == TokenType.Number)
             {
-                evaluateFunc = (d1, d2) => double.Parse(_token.Value);
+                evaluateFunc = (d1, d2) => double.Parse(_token.Value, CultureInfo.InvariantCulture);
             }
             else if (token.Type == TokenType.Operator)
             {
@@ -105,7 +106,7 @@ namespace Evaluator
 
         public double Evaluate()
         {
-            return Stack.Pop().Evaluate();
+            return Stack.Peek().Evaluate();
         }
     }
 

@@ -16,7 +16,7 @@
         public Token(string value, TokenType type)
         {
             Type = type;
-            Value = value;
+            Value = value.ToLower();
         }
     }
 }

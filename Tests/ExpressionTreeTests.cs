@@ -49,6 +49,11 @@ namespace Tests
         {
             Assert.AreEqual("18", ev.eval("2*3&2"));
         }
+        [Test]
+        public void Eval_Test7()
+        {
+            Assert.AreEqual("-0.826939069164175", ev.eval("sin(cos(--17--2*1e+2))"));
+        }
 
         [Test]
         public void Eval_Test2()
@@ -78,6 +83,26 @@ namespace Tests
         public void Eval_Test6()
         {
             Assert.AreEqual("169", ev.eval("abs(-(-1+(2*(4--3)))&2)"));
+        }
+        [Test]
+        public void Eval_Test8()
+        {
+            Assert.AreEqual("ERROR", ev.eval("sqrt(-3&(1+1--1+-1))"));
+        }
+        [Test]
+        public void Eval_Test9()
+        {
+            Assert.AreEqual("2.73978364189468", ev.eval("abs(1+(2-5)--8)* sin(3 + -8) / 2.1"));
+        }
+        [Test]
+        public void Eval_Test10()
+        {
+            Assert.AreEqual("2395.58653659743", ev.eval("(Abs(1+(2-16)-3)* sin(3 + 16) / 2.1) -12.3453* 0.45+2.4e3"));
+        }
+        [Test]
+        public void Eval_Test11()
+        {
+            Assert.AreEqual("ERROR", ev.eval("si   n (2)"));
         }
     }
 }
